@@ -7,6 +7,7 @@ import java.util.ArrayList;
 //  First of all, errors are simple strings,
 //  perhaps it may be worthwhile to augment this reporter
 //  with requiring line numbers.
+
 public class ErrorReporter {
 	private List<String> _errorQueue;
 

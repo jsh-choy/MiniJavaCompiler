@@ -30,10 +30,11 @@ public class Scanner {
 			return makeToken(TokenType.EOT);
 		}
 
-
 		// TODO: This function should check the current char to determine what the token could be.
 		if (validStartChar(_currentChar)) {
-			resetText();
+			// StringBuilder text = new StringBuilder();
+			_currentText.setLength(0);
+
 			while (!_eot && validCharId(_currentChar)) {
 				takeIt();
 			}
@@ -74,7 +75,7 @@ public class Scanner {
 					return makeToken(TokenType.ID);
 			}
 		} else if (isDigit(_currentChar)) {
-			resetText();
+			_currentText.setLength(0);
 			while (!_eot && isDigit(_currentChar)) {
 				takeIt();
 			}
@@ -83,7 +84,7 @@ public class Scanner {
 		}
 
 		else {
-			resetText();
+			_currentText.setLength(0);
 			switch (_currentChar) {
 				case '{':
 					takeIt();
@@ -194,6 +195,10 @@ public class Scanner {
 						return makeToken(TokenType.MINUSMINUS);
 					}
 					return makeToken(TokenType.MINUS);
+
+				case '_':
+					takeIt();
+					return makeToken(TokenType.ID);
 
 				case '.':
 					// TODO: Implement this correctly

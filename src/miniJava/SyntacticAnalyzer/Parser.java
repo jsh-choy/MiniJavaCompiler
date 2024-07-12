@@ -31,7 +31,7 @@ public class Parser {
 		while(_currentToken.getTokenType() != TokenType.EOT) {
 			parseClassDeclaration();
 		}
-		_currentToken = _scanner.scan();
+		// _currentToken = _scanner.scan();
 	}
 
 	// ClassDeclaration ::= class identifier { (FieldDeclaration|MethodDeclaration)* }
@@ -41,12 +41,19 @@ public class Parser {
 		accept(TokenType.CLASS);
 
 		// TODO: Take in an identifier token
-		accept(TokenType.ID);
+		if (_currentToken.getTokenText().charAt(0) == '_') {
+			String errMsg = "Class id cannot start with _";
+			_errors.reportError(errMsg);
+			throw new SyntaxError();
+		} else {
+			accept(TokenType.ID);
+		}
 
 		// TODO: Take in a {
 		accept(TokenType.LBRACE);
-
+		System.out.println(_currentToken.getTokenType());
 		// TODO: Parse either a FieldDeclaration or MethodDeclaration
+
 		while (_currentToken.getTokenType() != TokenType.RBRACE) {
 			parseClassOptions();
 		}
@@ -384,7 +391,6 @@ public class Parser {
 			default:
 				break;
 		}
-
 	}
 
 	// This method will accept the token and retrieve the next token.
